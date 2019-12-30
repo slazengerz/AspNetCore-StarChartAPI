@@ -6,16 +6,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StarChart.Data;
 
-namespace StarChart.Controllers
-{
-    [Route("")]
-    [ApiController]
-    public class CelestialObjectController : ControllerBase
+    namespace StarChart.Controllers
     {
-        private readonly ApplicationDbContext _context;
-        public CelestialObjectController(ApplicationDbContext context)
+        [Route("")]
+        [ApiController]
+        public class CelestialObjectController : ControllerBase
         {
-            _context = context;
+            private readonly ApplicationDbContext _context;
+            public CelestialObjectController(ApplicationDbContext context)
+            {
+                _context = context;
+            }
         }
     }
+
 }
