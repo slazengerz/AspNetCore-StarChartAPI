@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StarChart.Data;
+using StarChart.Models;
 
 namespace StarChart.Controllers
 {
@@ -56,6 +57,59 @@ namespace StarChart.Controllers
                 item.Satellites = _context.CelestialObjects.Where(c => c.Id == item.Id).ToList();
             }
             return Ok(_context.CelestialObjects);
+        }
+
+        [HttpPost("[FromBody]CelestialObject")]
+        public IActionResult Create(CelestialObject  celstObj)
+        {
+            _context.CelestialObjects.Add(celstObj);
+            _context.SaveChanges();
+            return CreatedAtRoute("GetById", new { id = celstObj.Id }, celstObj);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id,CelestialObject celstObj)
+        {
+            var item = _context.CelestialObjects.FirstOrDefault(c => c.Id == id);
+            if(item == null)
+            {
+                return NotFound();
+            }
+
+            item.Name = celstObj.Name;
+            item.OrbitalPeriod = celstObj.OrbitalPeriod;
+            item.OrbitedObjectId = celstObj.OrbitedObjectId;
+            item.Satellites = celstObj.Satellites;
+
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id}/{name}")]
+        public IActionResult RenameObject(int id,string name)
+        {
+            var item = _context.CelestialObjects.FirstOrDefault(c => c.Id == id);
+            if(item == null)
+            {
+                return NotFound();
+            }
+            item.Name = name;
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var item = _context.CelestialObjects.Where(c => c.Id == id || c.OrbitedObjectId==id).ToList();
+            if (item.Count==0)
+            {
+                return NotFound();
+            }
+            _context.RemoveRange(item);
+            _context.SaveChanges();
+            return NoContent();
         }
     }
 }
