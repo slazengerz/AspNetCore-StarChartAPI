@@ -67,37 +67,37 @@ namespace StarChart.Controllers
             return CreatedAtRoute("GetById", new { id = celstObj.Id }, celstObj);
         }
 
-        //[HttpPut("{id}")]
-        //public IActionResult Update(int id,CelestialObject celstObj)
-        //{
-        //    var item = _context.CelestialObjects.FirstOrDefault(c => c.Id == id);
-        //    if(item == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, CelestialObject celstObj)
+        {
+            var item = _context.CelestialObjects.FirstOrDefault(c => c.Id == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
 
-        //    item.Name = celstObj.Name;
-        //    item.OrbitalPeriod = celstObj.OrbitalPeriod;
-        //    item.OrbitedObjectId = celstObj.OrbitedObjectId;
-        //    item.Satellites = celstObj.Satellites;
+            item.Name = celstObj.Name;
+            item.OrbitalPeriod = celstObj.OrbitalPeriod;
+            item.OrbitedObjectId = celstObj.OrbitedObjectId;
+            item.Satellites = celstObj.Satellites;
 
-        //    _context.SaveChanges();
+            _context.SaveChanges();
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
-        //[HttpPatch("{id}/{name}")]
-        //public IActionResult RenameObject(int id,string name)
-        //{
-        //    var item = _context.CelestialObjects.FirstOrDefault(c => c.Id == id);
-        //    if(item == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    item.Name = name;
-        //    _context.SaveChanges();
-        //    return NoContent();
-        //}
+        [HttpPatch("{id}/{name}")]
+        public IActionResult RenameObject(int id, string name)
+        {
+            var item = _context.CelestialObjects.FirstOrDefault(c => c.Id == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            item.Name = name;
+            _context.SaveChanges();
+            return NoContent();
+        }
 
         //[HttpDelete("{id}")]
         //public IActionResult Delete(int id)
